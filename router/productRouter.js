@@ -17,17 +17,24 @@ function checkAuth(req, res, next){
 
 router.route('/')
 .get(async (req, res) => {
-    const result = await Product.find({})
-    res.json({success: true, products:result.length, data: result});
+    try{
+        const result = await Product.find({})
+        res.json({success: true, products:result.length, data: result});
+    }
+    catch(err){
+        console.log(err);
+    }
 })
 .post(async (req, res) => {
     const {name, image, fastDelivery, inStock, price, discountedPrice, offer, description, rating} = req.body;
-
-    const newProduct = new Product({name, image, fastDelivery, inStock, price, discountedPrice, offer, description, rating});
-
-    const response = await newProduct.save();
-    
-    res.json({sucess: true, message: response});
+    try{
+        const newProduct = new Product({name, image, fastDelivery, inStock, price, discountedPrice, offer, description, rating});
+        const response = await newProduct.save();
+        res.json({sucess: true, message: response});
+    }
+    catch(err){
+        console.log(err);
+    }
 })
 
 

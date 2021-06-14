@@ -26,15 +26,23 @@ app.use(cors());
 app.use('/products', productRouter);
 
 app.get('/',async (req, res) => {
+  try{
     User.find({}).then(data => res.json({success: true, data}));
+  }catch(err){
+    console.log(err);
+  }
 })
 
 app.post('/', async (req, res) => {
   const {emailId, password} = req.body;
-  const newUser = new User({emailId: emailId, password: password});
-  newUser.save()
-  .then(savedUser => res.json({success: true, data: savedUser}))
-  .catch(err => console.log(err));
+  try{
+    const newUser = new User({emailId: emailId, password: password});
+    newUser.save()
+    .then(savedUser => res.json({success: true, data: savedUser}))
+    .catch(err => console.log(err));
+  }catch(err){
+    console.log(err);
+  }
 })
 
 app.use(routeNotFound);
