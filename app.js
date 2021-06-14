@@ -27,7 +27,7 @@ app.use('/products', productRouter);
 
 app.get('/',async (req, res) => {
   try{
-    User.find({}).then(data => res.json({success: true, data}));
+    const response = User.find({}).then(data => res.json({success: true, data}));
   }catch(err){
     console.log(err);
   }
@@ -38,8 +38,7 @@ app.post('/', async (req, res) => {
   try{
     const newUser = new User({emailId: emailId, password: password});
     newUser.save()
-    .then(savedUser => res.json({success: true, data: savedUser}))
-    .catch(err => console.log(err));
+    .then(savedUser => res.json({success: true, data: savedUser}));
   }catch(err){
     console.log(err);
   }
