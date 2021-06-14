@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+require('dotenv').config()
+const initializeDBConnection = require('./db/db');
 
 //Routers
 const productRouter = require('./router/productRouter');
@@ -12,14 +14,10 @@ const User = require('./models/user.model');
 const { errorHandler } = require("./middleware/error-handler");
 const { routeNotFound } =  require("./middleware/route-not-found");
 
-mongoose.connect("mongodb+srv://guptadivyanshu2012:ppgupta123@cluster0.z3bzt.mongodb.net/ecommerceAPI?retryWrites=true&w=majority", {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-})
-.then(() => {console.log("successfully connected")})
-.catch(error => console.error("mongoose connection failed", error))
+
 
 const app = express();
+initializeDBConnection();//Connect to database
 // app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 app.use(cors());
